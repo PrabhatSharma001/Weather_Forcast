@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { Card, Typography, Divider, Box, Checkbox } from "@mui/material";
-// import {useState} from 'react'
-import WbSunnyIcon from "@mui/icons-material/WbSunny";
-// import GrainIcon from "@mui/icons-material/Grain";
+import type { WeatherInfo } from './types/weather';
 import AirIcon from "@mui/icons-material/Air";
 import OpacityIcon from "@mui/icons-material/Opacity";
 import FilterDramaIcon from "@mui/icons-material/FilterDrama";
+import { Visibility} from '@mui/icons-material';
 
+interface WeatherCardProps {
+  weatherInfo: WeatherInfo;
+}
 
-
-const WeatherCard = () => {
-
+const WeatherCard : React.FC<WeatherCardProps>= ({weatherInfo}) => {
+console.log("Weather Info_______________",weatherInfo)
 
   return (
     <Card
@@ -24,22 +25,21 @@ const WeatherCard = () => {
       }}
     >
       <Typography variant="h6" sx={{ mt: 1, mb: 2 }}>
-        Bangladesh
+       {weatherInfo.cityName}, {weatherInfo.country}
       </Typography>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h2" fontWeight="bold">
-          26°C
+          {weatherInfo.temp}° <sup>c</sup>
         </Typography>
         <FilterDramaIcon sx={{ fontSize: 60, color: "white" }} />
-        {/* <i className="fa-solid fa-cloud"></i> */}
       </Box>
 
       <Typography variant="h6" sx={{ mt: 1, mb: 2 }}>
-        Rainy Storm Clouds
+        {weatherInfo.weatherDescription}
       </Typography>
 
       <Typography variant="body2" sx={{ opacity: 0.9 }}>
-        Thursday | 6:15 PM
+        {weatherInfo.day} | {weatherInfo.time}
       </Typography>
 
       <Divider sx={{ my: 2, bgcolor: "rgba(255,255,255,0.3)" }} />
@@ -53,7 +53,7 @@ const WeatherCard = () => {
             sx={{ color: "white", p: 0, mr: 1 }}
           />
           <Typography>Wind Speed</Typography>
-          <Typography sx={{ ml: "auto", fontWeight: "bold" }}>6 mph</Typography>
+          <Typography sx={{ ml: "auto", fontWeight: "bold" }}>{weatherInfo.windSpeed} mph</Typography>
         </Box>
 
         <Box display="flex" alignItems="center">
@@ -64,18 +64,18 @@ const WeatherCard = () => {
             sx={{ color: "white", p: 0, mr: 1 }}
           />
           <Typography>Humidity</Typography>
-          <Typography sx={{ ml: "auto", fontWeight: "bold" }}>80%</Typography>
+          <Typography sx={{ ml: "auto", fontWeight: "bold" }}>{weatherInfo.humidity}%</Typography>
         </Box>
 
         <Box display="flex" alignItems="center">
           <Checkbox
-            icon={<WbSunnyIcon />}
-            checkedIcon={<WbSunnyIcon />}
+            icon={<Visibility/>}
+            checkedIcon={<Visibility/>}
             checked={false}
             sx={{ color: "white", p: 0, mr: 1 }}
           />
-          <Typography>Air quality</Typography>
-          <Typography sx={{ ml: "auto", fontWeight: "bold" }}>29</Typography>
+          <Typography>Visibility</Typography>
+          <Typography sx={{ ml: "auto", fontWeight: "bold" }}>{weatherInfo.visibility}</Typography>
         </Box>
       </Box>
     </Card>

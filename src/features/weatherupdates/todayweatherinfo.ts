@@ -1,7 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-const API_KEY = "2200c62dc54c4116af023c6dc99c68c1";
-
+import type { WeatherInfo } from "../../types/weather";
+const API_KEY = import.meta.env.VITE_WEATHER_API_KEY as string;
+export interface WeatherState {
+  weatherData: WeatherInfo | null;
+  loading: boolean;
+  error: string | null;
+}
+// Define the initial state using that type
 const initialState = {
   weatherData: null,
   loading: false,
@@ -10,7 +15,7 @@ const initialState = {
 
 export const fetchWeather = createAsyncThunk(
   "weather/fetchWeather",
-  async (city:string, thunkAPI) => {
+  async (city: string, thunkAPI) => {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&limit=5&appid=${API_KEY}&units=metric`
     );
